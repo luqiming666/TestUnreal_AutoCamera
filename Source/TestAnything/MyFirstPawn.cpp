@@ -2,6 +2,7 @@
 
 #include "MyFirstPawn.h"
 #include "Camera/CameraComponent.h"
+#include "DialogWidget.h"
 
 // Sets default values
 AMyFirstPawn::AMyFirstPawn()
@@ -9,15 +10,15 @@ AMyFirstPawn::AMyFirstPawn()
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-    // ½«¸ÃpawnÉèÎªÓÉ×îÐ¡±àºÅÍæ¼Ò¿ØÖÆ
+    // ï¿½ï¿½ï¿½ï¿½pawnï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½Ð¡ï¿½ï¿½ï¿½ï¿½ï¿½Ò¿ï¿½ï¿½ï¿½
     AutoPossessPlayer = EAutoReceiveInput::Player0;
 
-    // ´´½¨¿É¸½¼ÓÄÚÈÝµÄÐéÄâ¸ù×é¼þ¡£
+    // ï¿½ï¿½ï¿½ï¿½ï¿½É¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ýµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("RootComponent"));
-    // ´´½¨Ïà»úºÍ¿É¼û¶ÔÏó
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¿É¼ï¿½ï¿½ï¿½ï¿½ï¿½
     UCameraComponent* OurCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("OurCamera"));
     OurVisibleComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("OurVisibleComponent"));
-    // ½«Ïà»úºÍ¿É¼û¶ÔÏó¸½¼Óµ½¸ù×é¼þ¡£Æ«ÒÆ²¢Ðý×ªÏà»ú¡£
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¿É¼ï¿½ï¿½ï¿½ï¿½ó¸½¼Óµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ«ï¿½Æ²ï¿½ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½ï¿½
     OurCamera->SetupAttachment(RootComponent);
     OurCamera->SetRelativeLocation(FVector(-250.0f, 0.0f, 250.0f));
     OurCamera->SetRelativeRotation(FRotator(-45.0f, 0.0f, 0.0f));
@@ -36,25 +37,25 @@ void AMyFirstPawn::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-    // ¸ù¾Ý"Grow"²Ù×÷´¦ÀíÔö³¤ºÍËõ¼õ
+    // ï¿½ï¿½ï¿½ï¿½"Grow"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     {
         float CurrentScale = OurVisibleComponent->GetComponentScale().X;
         if (bGrowing)
         {
-            // Ò»ÃëÄÚÔö³¤µ½Á½±¶´óÐ¡
+            // Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¡
             CurrentScale += DeltaTime;
         }
         else
         {
-            // ÒÔÔö³¤ËÙ¶ÈËõ¼õÒ»°ë
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ù¶ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½
             CurrentScale -= (DeltaTime * 0.5f);
         }
-        // È·±£²»»á½µÖÁ³õÊ¼´óÐ¡ÒÔÏÂ£¬»òÕßÔöÖÁÁ½±¶´óÐ¡ÒÔÉÏ¡£
+        // È·ï¿½ï¿½ï¿½ï¿½ï¿½á½µï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½Ð¡ï¿½ï¿½ï¿½Â£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¡ï¿½ï¿½ï¿½Ï¡ï¿½
         CurrentScale = FMath::Clamp(CurrentScale, 1.0f, 2.0f);
         OurVisibleComponent->SetWorldScale3D(FVector(CurrentScale));
     }
 
-    // ¸ù¾Ý"MoveX"ºÍ"MoveY"Öá´¦ÀíÒÆ¶¯
+    // ï¿½ï¿½ï¿½ï¿½"MoveX"ï¿½ï¿½"MoveY"ï¿½á´¦ï¿½ï¿½ï¿½Æ¶ï¿½
     {
         if (!CurrentVelocity.IsZero())
         {
@@ -70,12 +71,12 @@ void AMyFirstPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
-    // ÔÚ°´ÏÂ»òËÉ¿ª"Grow"¼üÊ±×ö³öÏìÓ¦¡£
+    // ï¿½Ú°ï¿½ï¿½Â»ï¿½ï¿½É¿ï¿½"Grow"ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½
     InputComponent->BindAction("Grow", IE_Pressed, this, &AMyFirstPawn::StartGrowing);
     InputComponent->BindAction("Grow", IE_Released, this, &AMyFirstPawn::StopGrowing);
     InputComponent->BindAction("QuitGame", IE_Released, this, &AMyFirstPawn::QuitGame);
 
-    // ¶ÔÁ½¸öÒÆ¶¯Öá"MoveX"ºÍ"MoveY"µÄÖµÖðÖ¡·´Ó¦¡£
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¶ï¿½ï¿½ï¿½"MoveX"ï¿½ï¿½"MoveY"ï¿½ï¿½Öµï¿½ï¿½Ö¡ï¿½ï¿½Ó¦ï¿½ï¿½
     InputComponent->BindAxis("MoveX", this, &AMyFirstPawn::Move_XAxis);
     InputComponent->BindAxis("MoveY", this, &AMyFirstPawn::Move_YAxis);
 
@@ -83,13 +84,13 @@ void AMyFirstPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 
 void AMyFirstPawn::Move_XAxis(float AxisValue)
 {
-    // ÒÔ100µ¥Î»/ÃëµÄËÙ¶ÈÏòÇ°»òÏòºóÒÆ¶¯
+    // ï¿½ï¿½100ï¿½ï¿½Î»/ï¿½ï¿½ï¿½ï¿½Ù¶ï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¶ï¿½
     CurrentVelocity.X = FMath::Clamp(AxisValue, -1.0f, 1.0f) * 100.0f;
 }
 
 void AMyFirstPawn::Move_YAxis(float AxisValue)
 {
-    // ÒÔ100µ¥Î»/ÃëµÄËÙ¶ÈÏòÓÒ»òÏò×óÒÆ¶¯
+    // ï¿½ï¿½100ï¿½ï¿½Î»/ï¿½ï¿½ï¿½ï¿½Ù¶ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¶ï¿½
     CurrentVelocity.Y = FMath::Clamp(AxisValue, -1.0f, 1.0f) * 100.0f;
 }
 
@@ -105,6 +106,14 @@ void AMyFirstPawn::StopGrowing()
 
 void AMyFirstPawn::QuitGame()
 {
-    // ÇëÇóÍË³öÓÎÏ·
-    FGenericPlatformMisc::RequestExit(false);
+#if PLATFORM_WINDOWS
+	SDialogWidget::ShowModal(
+		FText::FromString("Are you sure you want to quit the game?"),
+		FSimpleDelegate::CreateLambda([]() {
+
+			// Request to exit game
+			FGenericPlatformMisc::RequestExit(false);
+
+		}));
+#endif
 }
