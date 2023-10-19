@@ -57,6 +57,18 @@ void SDialogWidget::Construct(const FArguments& InArgs)
     //FSlateApplication::Get().SetKeyboardFocus(ConfirmButton);
 }
 
+FReply SDialogWidget::OnPreviewKeyDown(const FGeometry& InGeometry, const FKeyEvent& InKeyEvent)
+{
+    // TODO: didn't be invoked... why?
+    if (InKeyEvent.GetKey() == EKeys::Enter)
+    {
+        OnConfirmButtonClicked();
+        return FReply::Handled();
+    }
+
+    return FReply::Unhandled();
+}
+
 TSharedPtr<SDialogWidget> DialogWidget;
 TSharedPtr<SWindow> ModalWindow; // The host window
 void SDialogWidget::ShowModal(FText Msg, FSimpleDelegate OnConfirmed)
@@ -76,6 +88,20 @@ void SDialogWidget::ShowModal(FText Msg, FSimpleDelegate OnConfirmed)
         }));
 
     ModalWindow->SetContent(DialogWidget.ToSharedRef());
+    //FSlateApplication::Get().SetKeyboardFocus(ModalWindow, EKeyboardFocusCause::SetDirectly);
+    FSlateApplication::Get().SetUnhandledKeyDownEventHandler(FOnKeyEvent::CreateLambda([](const FKeyEvent& InKeyEvent) -> FReply {
+        if (InKeyEvent.GetKey() == EKeys::Escape)
+        {
+            ModalWindow->RequestDestroyWindow();
+            return FReply::Handled();
+        } 
+        else if (InKeyEvent.GetKey() == EKeys::Enter)
+        {
+            DialogWidget->OnConfirmButtonClicked();
+            return FReply::Handled();
+        }
+        return FReply::Unhandled();
+        }));
     FSlateApplication::Get().AddModalWindow(ModalWindow.ToSharedRef(), nullptr);
 }
 

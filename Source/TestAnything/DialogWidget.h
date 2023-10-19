@@ -16,6 +16,7 @@ public:
     SLATE_END_ARGS()
 
     void Construct(const FArguments& InArgs);
+    virtual FReply OnPreviewKeyDown(const FGeometry& InGeometry, const FKeyEvent& InKeyEvent) override;
 
     static void ShowModal(FText Msg, FSimpleDelegate OnConfirmed);
 
