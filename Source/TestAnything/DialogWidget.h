@@ -28,4 +28,7 @@ private:
     FSimpleDelegate OnCancelClicked;
 
     FReply OnConfirmButtonClicked();
+
+    static TSharedPtr<SDialogWidget> DialogWidget;
+    static TSharedPtr<SWindow> ModalWindow;
 };

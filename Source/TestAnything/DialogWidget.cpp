@@ -4,6 +4,9 @@
 #include "Widgets/Text/STextBlock.h"
 #include "Widgets/Input/SButton.h"
 
+TSharedPtr<SDialogWidget> SDialogWidget::DialogWidget;
+TSharedPtr<SWindow> SDialogWidget::ModalWindow;
+
 void SDialogWidget::Construct(const FArguments& InArgs)
 {
     MessageText = InArgs._MessageText;
@@ -69,8 +72,6 @@ FReply SDialogWidget::OnPreviewKeyDown(const FGeometry& InGeometry, const FKeyEv
     return FReply::Unhandled();
 }
 
-TSharedPtr<SDialogWidget> DialogWidget;
-TSharedPtr<SWindow> ModalWindow; // The host window
 void SDialogWidget::ShowModal(FText Msg, FSimpleDelegate OnConfirmed)
 {
     ModalWindow = SNew(SWindow)
